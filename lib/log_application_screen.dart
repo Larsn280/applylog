@@ -56,7 +56,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
   void _saveApplicationData() {
     try {
-      if (_formKey.currentState?.validate() ?? false) {}
+      if (_formKey.currentState?.validate() == true) {}
     } catch (e) {
       throw Exception('Failed to save data... $e');
     }
