@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
 
-class CustomSearchDropdownList extends StatelessWidget {
+class CustomSearchDropdownList extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
-  final ValueChanged<String?>? onErrorChanged;
-  final String? errorMessage;
+  final String? Function(String?)? validator;
 
   const CustomSearchDropdownList({
     super.key,
     required this.controller,
     required this.hintText,
-    required this.onErrorChanged,
-    required this.errorMessage,
+    this.validator,
   });
 
-  void _clearErrorMessage() {
-    if (errorMessage != null) {
-      onErrorChanged?.call(null);
-    }
-  }
+  @override
+  CustomSearchDropdownListState createState() =>
+      CustomSearchDropdownListState();
+}
 
+class CustomSearchDropdownListState extends State<CustomSearchDropdownList> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          width: MediaQuery.of(context).size.width,
+          width: double.infinity,
           decoration: BoxDecoration(color: Colors.black),
           child: Column(
             children: [
-              TextField(
-                controller: controller,
-                onChanged: (_) => _clearErrorMessage(),
+              TextFormField(
+                controller: widget.controller,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
-                  hintText: hintText,
+                  hintText: widget.hintText,
                   hintStyle: const TextStyle(
                     fontSize: 13.0,
                     color: Colors.white,
@@ -43,10 +40,9 @@ class CustomSearchDropdownList extends StatelessWidget {
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
-                  errorText: errorMessage,
-                  errorStyle: TextStyle(color: Colors.red),
                 ),
                 style: TextStyle(fontSize: 13.0, color: Colors.white),
+                validator: widget.validator,
               ),
             ],
           ),
