@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomSearchDropdownList extends StatefulWidget {
+class CustomSearchDropdownList extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final ValueChanged<String?>? onErrorChanged;
@@ -14,15 +14,9 @@ class CustomSearchDropdownList extends StatefulWidget {
     required this.errorMessage,
   });
 
-  @override
-  State<CustomSearchDropdownList> createState() =>
-      _CustomSearchDropdownListState();
-}
-
-class _CustomSearchDropdownListState extends State<CustomSearchDropdownList> {
   void _clearErrorMessage() {
-    if (widget.errorMessage != null) {
-      widget.onErrorChanged?.call(null);
+    if (errorMessage != null) {
+      onErrorChanged?.call(null);
     }
   }
 
@@ -32,29 +26,33 @@ class _CustomSearchDropdownListState extends State<CustomSearchDropdownList> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Colors.black87),
+          decoration: BoxDecoration(color: Colors.black),
           child: Column(
             children: [
               TextField(
-                controller: widget.controller,
+                controller: controller,
                 onChanged: (_) => _clearErrorMessage(),
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
-                  hintText: widget.hintText,
+                  hintText: hintText,
                   hintStyle: const TextStyle(
                     fontSize: 13.0,
                     color: Colors.white,
                   ),
                   contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                  border: InputBorder.none, // Removes the underline
+                  enabledBorder:
+                      InputBorder.none, // No underline when not focused
+                  focusedBorder: InputBorder.none, // No underline when focused
                 ),
                 style: TextStyle(fontSize: 13.0, color: Colors.white),
               ),
             ],
           ),
         ),
-        if (widget.errorMessage != null)
+        if (errorMessage != null)
           Text(
-            widget.errorMessage!,
+            errorMessage!,
             style: TextStyle(color: Colors.red),
           ),
       ],

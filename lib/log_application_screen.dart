@@ -1,4 +1,5 @@
 import 'package:applylog/widgets/custom_app_container.dart';
+import 'package:applylog/widgets/custom_button.dart';
 import 'package:applylog/widgets/custom_search_dropdownlist.dart';
 import 'package:flutter/material.dart';
 
@@ -90,6 +91,16 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
             ),
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                        text: 'Rensa fält', onPressed: _saveApplicationData),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12.0,
+                ),
                 CustomSearchDropdownList(
                   controller: _adSourceController,
                   hintText: 'Var såg du annonsen?',
@@ -212,11 +223,15 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                 const SizedBox(
                   height: 12.0,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      _isValidated();
-                    },
-                    child: Text('Spara'))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomButton(
+                        text: 'Avbryt', onPressed: _saveApplicationData),
+                    CustomButton(
+                        text: 'Spara', onPressed: _saveApplicationData),
+                  ],
+                ),
               ],
             ),
           ),

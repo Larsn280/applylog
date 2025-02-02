@@ -19,7 +19,7 @@ class CustomAppContainer extends StatelessWidget {
       ),
       body: SizedBox.expand(
         child: Container(
-          color: Colors.black87,
+          color: Colors.black,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SingleChildScrollView(
             child: child,
