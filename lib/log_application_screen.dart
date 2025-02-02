@@ -1,4 +1,3 @@
-import 'package:applylog/app_constants.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_search_dropdownlist.dart';
 import 'package:flutter/material.dart';
@@ -39,31 +38,26 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   String? _companysiteError;
   String? _commentsError;
 
+  String? _validateField(String fieldName, String value) {
+    if (value.isEmpty) {
+      return 'Vänligen ange $fieldName.';
+    } else if (value.length < 2) {
+      return 'Vänligen ange minst två bokstäver för $fieldName.';
+    }
+    return null;
+  }
+
   bool _isValidated() {
     setState(() {
-      if (_companyController.text.isEmpty) {
-        _companyError = 'Vänligen ange ett företag.';
-      } else if (_companyController.text.length < 2) {
-        _companyError = 'Vänligen ange minst två bokstäver.';
-      }
+      _companyError = _validateField('ett företag', _companyController.text);
 
-      if (_appliedJobController.text.isEmpty) {
-        _appliedJobError = 'Vänligen ange en tjänst.';
-      } else if (_appliedJobController.text.length < 2) {
-        _appliedJobError = 'Vänligen ange minst två bokstäver.';
-      }
+      _appliedJobError =
+          _validateField('en tjänst', _appliedJobController.text);
 
-      if (_locationController.text.isEmpty) {
-        _locationError = 'Vänligen ange plats.';
-      } else if (_locationController.text.length < 2) {
-        _locationError = 'Vänligen ange minst två bokstäver.';
-      }
+      _locationError = _validateField('en plats', _locationController.text);
 
-      if (_adSourceController.text.isEmpty) {
-        _adSourceError = 'Vänligen ange var du såg annonsen.';
-      } else if (_adSourceController.text.length < 2) {
-        _adSourceError = 'Vänligen ange minst två bokstäver.';
-      }
+      _adSourceError =
+          _validateField('var du såg annonsen', _adSourceController.text);
     });
     return _companyError == null &&
         _appliedJobError == null &&
@@ -73,7 +67,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
   void _saveApplicationData() {
     try {
-      if (_isValidated() == true) {}
+      if (_isValidated()) {}
     } catch (e) {
       throw Exception('Failed to save data... $e');
     }
