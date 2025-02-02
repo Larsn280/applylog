@@ -51,6 +51,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
       _companysiteController.clear();
       _commentsController.clear();
     });
+    _formKey.currentState?.reset();
   }
 
   void _saveApplicationData() {

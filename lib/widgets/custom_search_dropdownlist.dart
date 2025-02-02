@@ -43,6 +43,7 @@ class CustomSearchDropdownListState extends State<CustomSearchDropdownList> {
                 ),
                 style: TextStyle(fontSize: 13.0, color: Colors.white),
                 validator: widget.validator,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ],
           ),
