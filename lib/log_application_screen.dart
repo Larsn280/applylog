@@ -1,4 +1,5 @@
 import 'package:applylog/app_constants.dart';
+import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_search_dropdownlist.dart';
 import 'package:flutter/material.dart';
 
@@ -80,9 +81,8 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppConstants.buildMainContainer(
+    return CustomAppContainer(
       titleText: 'Logga sökt tjänst',
-      context: context,
       child: Column(
         children: [
           const SizedBox(
