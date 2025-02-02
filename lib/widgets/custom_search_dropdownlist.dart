@@ -40,21 +40,17 @@ class CustomSearchDropdownList extends StatelessWidget {
                     color: Colors.white,
                   ),
                   contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                  border: InputBorder.none, // Removes the underline
-                  enabledBorder:
-                      InputBorder.none, // No underline when not focused
-                  focusedBorder: InputBorder.none, // No underline when focused
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorText: errorMessage,
+                  errorStyle: TextStyle(color: Colors.red),
                 ),
                 style: TextStyle(fontSize: 13.0, color: Colors.white),
               ),
             ],
           ),
         ),
-        if (errorMessage != null)
-          Text(
-            errorMessage!,
-            style: TextStyle(color: Colors.red),
-          ),
       ],
     );
   }

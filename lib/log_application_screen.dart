@@ -66,6 +66,38 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
         _adSourceError == null;
   }
 
+  void _clearAllFields() {
+    setState(() {
+      _companyController.clear();
+      _appliedJobController.clear();
+      _locationController.clear();
+      _adSourceController.clear();
+      _contactController.clear();
+      _phoneController.clear();
+      _emailController.clear();
+      _dateController.clear();
+      _referenceController.clear();
+      _applystatusController.clear();
+      _adlinkController.clear();
+      _companysiteController.clear();
+      _commentsController.clear();
+
+      _companyError = null;
+      _appliedJobError = null;
+      _locationError = null;
+      _adSourceError = null;
+      _contactError = null;
+      _phoneError = null;
+      _emailError = null;
+      _dateError = null;
+      _referenceError = null;
+      _applystatusError = null;
+      _adlinkError = null;
+      _companysiteError = null;
+      _commentsError = null;
+    });
+  }
+
   void _saveApplicationData() {
     try {
       if (_isValidated()) {}
@@ -95,131 +127,141 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomButton(
-                        text: 'Rensa fält', onPressed: _saveApplicationData),
+                        text: 'Rensa fält', onPressed: _clearAllFields),
                   ],
                 ),
                 const SizedBox(
                   height: 12.0,
                 ),
-                CustomSearchDropdownList(
-                  controller: _adSourceController,
-                  hintText: 'Var såg du annonsen?',
-                  onErrorChanged: (newError) {
-                    setState(() {
-                      _adSourceError = newError;
-                    });
-                  },
-                  errorMessage: _adSourceError,
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      CustomSearchDropdownList(
+                        controller: _adSourceController,
+                        hintText: 'Var såg du annonsen?',
+                        onErrorChanged: (newError) {
+                          setState(() {
+                            _adSourceError = newError;
+                          });
+                        },
+                        errorMessage: _adSourceError,
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _companyController,
+                        hintText: 'Företag',
+                        onErrorChanged: (newError) {
+                          setState(() {
+                            _companyError = newError;
+                          });
+                        },
+                        errorMessage: _companyError,
+                      ),
+                      CustomSearchDropdownList(
+                          controller: _appliedJobController,
+                          hintText: 'Sökt tjänst',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _appliedJobError = newError;
+                            });
+                          },
+                          errorMessage: _appliedJobError),
+                      CustomSearchDropdownList(
+                          controller: _locationController,
+                          hintText: 'Plats',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _locationError = newError;
+                            });
+                          },
+                          errorMessage: _locationError),
+                      CustomSearchDropdownList(
+                          controller: _contactController,
+                          hintText: 'Kontaktperson (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _contactError = newError;
+                            });
+                          },
+                          errorMessage: _contactError),
+                      CustomSearchDropdownList(
+                          controller: _phoneController,
+                          hintText: 'Telefon (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _phoneError = newError;
+                            });
+                          },
+                          errorMessage: _phoneError),
+                      CustomSearchDropdownList(
+                          controller: _emailController,
+                          hintText: 'Email (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _emailError = newError;
+                            });
+                          },
+                          errorMessage: _emailError),
+                      CustomSearchDropdownList(
+                          controller: _dateController,
+                          hintText: 'Datum då du såg annonsen (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _dateError = newError;
+                            });
+                          },
+                          errorMessage: _dateError),
+                      CustomSearchDropdownList(
+                          controller: _referenceController,
+                          hintText: 'Referensnummer (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _referenceError = newError;
+                            });
+                          },
+                          errorMessage: _referenceError),
+                      CustomSearchDropdownList(
+                          controller: _applystatusController,
+                          hintText: 'Ansökningstatus (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _applystatusError = newError;
+                            });
+                          },
+                          errorMessage: _applystatusError),
+                      CustomSearchDropdownList(
+                          controller: _adlinkController,
+                          hintText: 'Länk till annonsen (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _adlinkError = newError;
+                            });
+                          },
+                          errorMessage: _adlinkError),
+                      CustomSearchDropdownList(
+                          controller: _companysiteController,
+                          hintText: 'Företagets webbsida (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _companysiteError = newError;
+                            });
+                          },
+                          errorMessage: _companysiteError),
+                      CustomSearchDropdownList(
+                          controller: _commentsController,
+                          hintText: 'Övriga kommentarer (valfri)',
+                          onErrorChanged: (newError) {
+                            setState(() {
+                              _commentsError = newError;
+                            });
+                          },
+                          errorMessage: _commentsError),
+                    ],
+                  ),
                 ),
-                CustomSearchDropdownList(
-                  controller: _companyController,
-                  hintText: 'Företag',
-                  onErrorChanged: (newError) {
-                    setState(() {
-                      _companyError = newError;
-                    });
-                  },
-                  errorMessage: _companyError,
-                ),
-                CustomSearchDropdownList(
-                    controller: _appliedJobController,
-                    hintText: 'Sökt tjänst',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _appliedJobError = newError;
-                      });
-                    },
-                    errorMessage: _appliedJobError),
-                CustomSearchDropdownList(
-                    controller: _locationController,
-                    hintText: 'Plats',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _locationError = newError;
-                      });
-                    },
-                    errorMessage: _locationError),
-                CustomSearchDropdownList(
-                    controller: _contactController,
-                    hintText: 'Kontaktperson (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _contactError = newError;
-                      });
-                    },
-                    errorMessage: _contactError),
-                CustomSearchDropdownList(
-                    controller: _phoneController,
-                    hintText: 'Telefon (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _phoneError = newError;
-                      });
-                    },
-                    errorMessage: _phoneError),
-                CustomSearchDropdownList(
-                    controller: _emailController,
-                    hintText: 'Email (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _emailError = newError;
-                      });
-                    },
-                    errorMessage: _emailError),
-                CustomSearchDropdownList(
-                    controller: _dateController,
-                    hintText: 'Datum då du såg annonsen (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _dateError = newError;
-                      });
-                    },
-                    errorMessage: _dateError),
-                CustomSearchDropdownList(
-                    controller: _referenceController,
-                    hintText: 'Referensnummer (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _referenceError = newError;
-                      });
-                    },
-                    errorMessage: _referenceError),
-                CustomSearchDropdownList(
-                    controller: _applystatusController,
-                    hintText: 'Ansökningstatus (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _applystatusError = newError;
-                      });
-                    },
-                    errorMessage: _applystatusError),
-                CustomSearchDropdownList(
-                    controller: _adlinkController,
-                    hintText: 'Länk till annonsen (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _adlinkError = newError;
-                      });
-                    },
-                    errorMessage: _adlinkError),
-                CustomSearchDropdownList(
-                    controller: _companysiteController,
-                    hintText: 'Företagets webbsida (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _companysiteError = newError;
-                      });
-                    },
-                    errorMessage: _companysiteError),
-                CustomSearchDropdownList(
-                    controller: _commentsController,
-                    hintText: 'Övriga kommentarer (valfri)',
-                    onErrorChanged: (newError) {
-                      setState(() {
-                        _commentsError = newError;
-                      });
-                    },
-                    errorMessage: _commentsError),
                 const SizedBox(
                   height: 12.0,
                 ),

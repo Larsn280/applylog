@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.width,
-    this.height = 50.0,
+    this.height = 40.0,
     this.borderRadius = 8.0,
   });
 
@@ -32,11 +32,11 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           elevation: 3, // Shadow effect
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 13.0),
         ),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
     );
