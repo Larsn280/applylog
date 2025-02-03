@@ -4,12 +4,16 @@ class CustomSearchDropdownList extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final String? Function(String?)? validator;
+  final GlobalKey<FormFieldState>? fieldKey;
+  final List<String>? listItems;
 
   const CustomSearchDropdownList({
     super.key,
     required this.controller,
     required this.hintText,
     this.validator,
+    this.fieldKey,
+    this.listItems,
   });
 
   @override
@@ -28,6 +32,7 @@ class CustomSearchDropdownListState extends State<CustomSearchDropdownList> {
           child: Column(
             children: [
               TextFormField(
+                key: widget.fieldKey,
                 controller: widget.controller,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(

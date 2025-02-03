@@ -11,7 +11,11 @@ class LogApplicationScreen extends StatefulWidget {
 }
 
 class _LogApplicationScreen extends State<LogApplicationScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormFieldState> _adSourceKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _companyKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _appliedJobKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _locationKey = GlobalKey<FormFieldState>();
+
   final TextEditingController _companyController = TextEditingController();
   final TextEditingController _appliedJobController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
@@ -30,7 +34,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
     if (value.isEmpty) {
       return 'Vänligen ange $fieldName.';
     } else if (value.length < 2) {
-      return 'Vänligen ange minst två bokstäver för $fieldName.';
+      return 'Ange minst två tecken för $fieldName.';
     }
     return null;
   }
@@ -51,12 +55,30 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
       _companysiteController.clear();
       _commentsController.clear();
     });
-    _formKey.currentState?.reset();
+    _adSourceKey.currentState?.reset();
+    _companyKey.currentState?.reset();
+    _appliedJobKey.currentState?.reset();
+    _locationKey.currentState?.reset();
+  }
+
+  bool _validateAllFields() {
+    // Collect the validation results for each field
+    List<bool> validationResults = [
+      _adSourceKey.currentState?.validate() ?? false,
+      _companyKey.currentState?.validate() ?? false,
+      _appliedJobKey.currentState?.validate() ?? false,
+      _locationKey.currentState?.validate() ?? false,
+    ];
+
+    // Return true only if all fields are valid
+    return validationResults.every((result) => result == true);
   }
 
   void _saveApplicationData() {
     try {
-      if (_formKey.currentState?.validate() == true) {}
+      if (_validateAllFields()) {
+        print('Access');
+      }
     } catch (e) {
       throw Exception('Failed to save data... $e');
     }
@@ -86,90 +108,92 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
             ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8.0)),
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        CustomSearchDropdownList(
-                          controller: _adSourceController,
-                          hintText: 'Var såg du annonsen?',
-                          validator: (value) {
-                            return _validateField('var du såg annonsen',
-                                _adSourceController.text);
-                          },
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _companyController,
-                          hintText: 'Företag',
-                          validator: (value) {
-                            return _validateField(
-                                'ett företag', _companyController.text);
-                          },
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _appliedJobController,
-                          hintText: 'Sökt tjänst',
-                          validator: (value) {
-                            return _validateField(
-                                'en tjänst', _appliedJobController.text);
-                          },
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _locationController,
-                          hintText: 'Plats',
-                          validator: (value) {
-                            return _validateField(
-                                'en plats', _locationController.text);
-                          },
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _contactController,
-                          hintText: 'Kontaktperson (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _phoneController,
-                          hintText: 'Telefon (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _emailController,
-                          hintText: 'Email (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _dateController,
-                          hintText: 'Datum då du såg annonsen (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _referenceController,
-                          hintText: 'Referensnummer (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _applystatusController,
-                          hintText: 'Ansökningstatus (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _adlinkController,
-                          hintText: 'Länk till annonsen (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _companysiteController,
-                          hintText: 'Företagets webbsida (valfri)',
-                        ),
-                        CustomSearchDropdownList(
-                          controller: _commentsController,
-                          hintText: 'Övriga kommentarer (valfri)',
-                        ),
-                      ],
-                    ),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      CustomSearchDropdownList(
+                        controller: _adSourceController,
+                        hintText: 'Var såg du annonsen?',
+                        validator: (value) {
+                          return _validateField(
+                              'annonsen', _adSourceController.text);
+                        },
+                        fieldKey: _adSourceKey,
+                        listItems: ['Platsbanken', 'Academic Work', 'Monster'],
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _companyController,
+                        hintText: 'Företag',
+                        validator: (value) {
+                          return _validateField(
+                              'företag', _companyController.text);
+                        },
+                        fieldKey: _companyKey,
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _appliedJobController,
+                        hintText: 'Sökt tjänst',
+                        validator: (value) {
+                          return _validateField(
+                              'tjänst', _appliedJobController.text);
+                        },
+                        fieldKey: _appliedJobKey,
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _locationController,
+                        hintText: 'Plats',
+                        validator: (value) {
+                          return _validateField(
+                              'plats', _locationController.text);
+                        },
+                        fieldKey: _locationKey,
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _contactController,
+                        hintText: 'Kontaktperson (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _phoneController,
+                        hintText: 'Telefon (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _emailController,
+                        hintText: 'Email (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _dateController,
+                        hintText: 'Datum då du såg annonsen (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _referenceController,
+                        hintText: 'Referensnummer (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _applystatusController,
+                        hintText: 'Ansökningstatus (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _adlinkController,
+                        hintText: 'Länk till annonsen (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _companysiteController,
+                        hintText: 'Företagets webbsida (valfri)',
+                      ),
+                      CustomSearchDropdownList(
+                        controller: _commentsController,
+                        hintText: 'Övriga kommentarer (valfri)',
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           const SizedBox(
