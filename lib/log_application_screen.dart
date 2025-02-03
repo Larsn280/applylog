@@ -11,6 +11,7 @@ class LogApplicationScreen extends StatefulWidget {
 }
 
 class _LogApplicationScreen extends State<LogApplicationScreen> {
+  bool _startValidation = false;
   final GlobalKey<FormFieldState> _adSourceKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _companyKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _appliedJobKey = GlobalKey<FormFieldState>();
@@ -33,51 +34,55 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   String? _validateField(String fieldName, String value) {
     if (value.isEmpty) {
       return 'Vänligen ange $fieldName.';
-    } else if (value.length < 2) {
-      return 'Ange minst två tecken för $fieldName.';
     }
     return null;
   }
 
   void _clearAllFields() {
     setState(() {
-      _companyController.clear();
-      _appliedJobController.clear();
-      _locationController.clear();
-      _adSourceController.clear();
-      _contactController.clear();
-      _phoneController.clear();
-      _emailController.clear();
-      _dateController.clear();
-      _referenceController.clear();
-      _applystatusController.clear();
-      _adlinkController.clear();
-      _companysiteController.clear();
-      _commentsController.clear();
+      _startValidation = false; // Reset validation first
     });
-    _adSourceKey.currentState?.reset();
-    _companyKey.currentState?.reset();
-    _appliedJobKey.currentState?.reset();
-    _locationKey.currentState?.reset();
+
+    Future.delayed(Duration(milliseconds: 50), () {
+      setState(() {
+        _companyController.clear();
+        _appliedJobController.clear();
+        _locationController.clear();
+        _adSourceController.clear();
+        _contactController.clear();
+        _phoneController.clear();
+        _emailController.clear();
+        _dateController.clear();
+        _referenceController.clear();
+        _applystatusController.clear();
+        _adlinkController.clear();
+        _companysiteController.clear();
+        _commentsController.clear();
+
+        _adSourceKey.currentState?.reset();
+        _companyKey.currentState?.reset();
+        _appliedJobKey.currentState?.reset();
+        _locationKey.currentState?.reset();
+      });
+    });
   }
 
   bool _validateAllFields() {
-    // Collect the validation results for each field
-    List<bool> validationResults = [
-      _adSourceKey.currentState?.validate() ?? false,
-      _companyKey.currentState?.validate() ?? false,
-      _appliedJobKey.currentState?.validate() ?? false,
-      _locationKey.currentState?.validate() ?? false,
-    ];
+    setState(() {
+      _startValidation = true;
+    });
 
-    // Return true only if all fields are valid
-    return validationResults.every((result) => result == true);
+    return [
+      _adSourceKey.currentState?.validate(),
+      _companyKey.currentState?.validate(),
+      _appliedJobKey.currentState?.validate(),
+      _locationKey.currentState?.validate(),
+    ].every((result) => result ?? false);
   }
 
   void _saveApplicationData() {
-    try {
-      if (_validateAllFields()) {}
-    } catch (e) {
+    if (!_validateAllFields()) return;
+    try {} catch (e) {
       throw Exception('Failed to save data... $e');
     }
   }
@@ -123,6 +128,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                               'annonsen', _adSourceController.text);
                         },
                         fieldKey: _adSourceKey,
+                        startValidation: _startValidation,
                       ),
                       CustomTextFormField(
                         controller: _companyController,
@@ -132,6 +138,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                               'företag', _companyController.text);
                         },
                         fieldKey: _companyKey,
+                        startValidation: _startValidation,
                       ),
                       CustomTextFormField(
                         controller: _appliedJobController,
@@ -141,6 +148,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                               'tjänst', _appliedJobController.text);
                         },
                         fieldKey: _appliedJobKey,
+                        startValidation: _startValidation,
                       ),
                       CustomTextFormField(
                         controller: _locationController,
@@ -150,6 +158,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                               'plats', _locationController.text);
                         },
                         fieldKey: _locationKey,
+                        startValidation: _startValidation,
                       ),
                       CustomTextFormField(
                         controller: _contactController,

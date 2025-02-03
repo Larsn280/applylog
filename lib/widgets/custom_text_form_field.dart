@@ -4,6 +4,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final String? Function(String?)? validator;
+  final bool? startValidation;
   final GlobalKey<FormFieldState>? fieldKey;
 
   const CustomTextFormField({
@@ -11,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.validator,
+    this.startValidation = false,
     this.fieldKey,
   });
 
@@ -41,7 +43,11 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         style: TextStyle(fontSize: 13.0, color: Colors.white),
         validator: widget.validator,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: (value) {
+          if (widget.startValidation == true) {
+            widget.fieldKey?.currentState?.validate();
+          }
+        },
       ),
     );
   }
