@@ -124,8 +124,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         controller: _adSourceController,
                         hintText: 'Var såg du annonsen?',
                         validator: (value) {
-                          return _validateField(
-                              'annonsen', _adSourceController.text);
+                          return _validateField('annonsen', value ?? '');
                         },
                         fieldKey: _adSourceKey,
                         startValidation: _startValidation,
@@ -134,8 +133,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         controller: _companyController,
                         hintText: 'Företag',
                         validator: (value) {
-                          return _validateField(
-                              'företag', _companyController.text);
+                          return _validateField('företag', value ?? '');
                         },
                         fieldKey: _companyKey,
                         startValidation: _startValidation,
@@ -144,8 +142,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         controller: _appliedJobController,
                         hintText: 'Sökt tjänst',
                         validator: (value) {
-                          return _validateField(
-                              'tjänst', _appliedJobController.text);
+                          return _validateField('tjänst', value ?? '');
                         },
                         fieldKey: _appliedJobKey,
                         startValidation: _startValidation,
@@ -154,8 +151,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         controller: _locationController,
                         hintText: 'Plats',
                         validator: (value) {
-                          return _validateField(
-                              'plats', _locationController.text);
+                          return _validateField('plats', value ?? '');
                         },
                         fieldKey: _locationKey,
                         startValidation: _startValidation,
