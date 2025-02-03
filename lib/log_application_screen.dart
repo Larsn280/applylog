@@ -1,6 +1,6 @@
 import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_button.dart';
-import 'package:applylog/widgets/custom_search_dropdownlist.dart';
+import 'package:applylog/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class LogApplicationScreen extends StatefulWidget {
@@ -76,9 +76,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
   void _saveApplicationData() {
     try {
-      if (_validateAllFields()) {
-        print('Access');
-      }
+      if (_validateAllFields()) {}
     } catch (e) {
       throw Exception('Failed to save data... $e');
     }
@@ -117,7 +115,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                   padding: EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _adSourceController,
                         hintText: 'Var såg du annonsen?',
                         validator: (value) {
@@ -125,9 +123,8 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                               'annonsen', _adSourceController.text);
                         },
                         fieldKey: _adSourceKey,
-                        listItems: ['Platsbanken', 'Academic Work', 'Monster'],
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _companyController,
                         hintText: 'Företag',
                         validator: (value) {
@@ -136,7 +133,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         },
                         fieldKey: _companyKey,
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _appliedJobController,
                         hintText: 'Sökt tjänst',
                         validator: (value) {
@@ -145,7 +142,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         },
                         fieldKey: _appliedJobKey,
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _locationController,
                         hintText: 'Plats',
                         validator: (value) {
@@ -154,39 +151,39 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
                         },
                         fieldKey: _locationKey,
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _contactController,
                         hintText: 'Kontaktperson (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _phoneController,
                         hintText: 'Telefon (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _emailController,
                         hintText: 'Email (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _dateController,
                         hintText: 'Datum då du såg annonsen (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _referenceController,
                         hintText: 'Referensnummer (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _applystatusController,
                         hintText: 'Ansökningstatus (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _adlinkController,
                         hintText: 'Länk till annonsen (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _companysiteController,
                         hintText: 'Företagets webbsida (valfri)',
                       ),
-                      CustomSearchDropdownList(
+                      CustomTextFormField(
                         controller: _commentsController,
                         hintText: 'Övriga kommentarer (valfri)',
                       ),
