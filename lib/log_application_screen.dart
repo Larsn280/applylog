@@ -40,10 +40,10 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
   void _clearAllFields() {
     setState(() {
-      _startValidation = false; // Reset validation first
+      _startValidation = false; // Reset validation state
     });
 
-    Future.delayed(Duration(milliseconds: 50), () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _companyController.clear();
         _appliedJobController.clear();
