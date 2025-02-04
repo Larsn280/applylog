@@ -1,3 +1,4 @@
+import 'package:applylog/services/log_application_service.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_button.dart';
 import 'package:applylog/widgets/custom_text_form_field.dart';
@@ -17,10 +18,10 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   final GlobalKey<FormFieldState> _appliedJobKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _locationKey = GlobalKey<FormFieldState>();
 
+  final TextEditingController _adSourceController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
   final TextEditingController _appliedJobController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _adSourceController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -30,6 +31,13 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   final TextEditingController _adlinkController = TextEditingController();
   final TextEditingController _companysiteController = TextEditingController();
   final TextEditingController _commentsController = TextEditingController();
+  late LogApplicationService _logApplicationService;
+
+  @override
+  void initState() {
+    super.initState();
+    _logApplicationService = LogApplicationService();
+  }
 
   String? _validateField(String fieldName, String value) {
     if (value.isEmpty) {
@@ -45,10 +53,10 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        _companyController.clear();
+        _adSourceController.clear();
+        _companysiteController.clear();
         _appliedJobController.clear();
         _locationController.clear();
-        _adSourceController.clear();
         _contactController.clear();
         _phoneController.clear();
         _emailController.clear();
@@ -80,10 +88,40 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
     ].every((result) => result ?? false);
   }
 
-  void _saveApplicationData() {
-    if (!_validateAllFields()) return;
-    try {} catch (e) {
-      throw Exception('Failed to save data... $e');
+  Future<void> _saveApplicationData() async {
+    if (!_validateAllFields()) return; // Ensure validation is passed
+
+    try {
+      // Await the API response
+      final response = await _logApplicationService.submitForm(
+        _adSourceController.text,
+        _companyController.text,
+        _appliedJobController.text,
+        _locationController.text,
+        _contactController.text,
+        _phoneController.text,
+        _emailController.text,
+        _dateController.text,
+        _referenceController.text,
+        _applystatusController.text,
+        _adlinkController.text,
+        _companysiteController.text,
+        _commentsController.text,
+      );
+
+      // Check response and show feedback
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Application saved successfully!")));
+
+        _clearAllFields();
+      } else {
+        throw Exception(
+            "Failed to save data. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error: $e")));
     }
   }
 
