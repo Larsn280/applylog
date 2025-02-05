@@ -1,4 +1,5 @@
-import 'package:applylog/services/log_application_service.dart';
+import 'package:applylog/models/application_data.dart';
+import 'package:applylog/services/application_service.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_button.dart';
 import 'package:applylog/widgets/custom_text_form_field.dart';
@@ -31,12 +32,12 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   final TextEditingController _adlinkController = TextEditingController();
   final TextEditingController _companysiteController = TextEditingController();
   final TextEditingController _commentsController = TextEditingController();
-  late LogApplicationService _logApplicationService;
+  late ApplicationService _logApplicationService;
 
   @override
   void initState() {
     super.initState();
-    _logApplicationService = LogApplicationService();
+    _logApplicationService = ApplicationService();
   }
 
   String? _validateField(String fieldName, String value) {
@@ -89,25 +90,27 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   }
 
   Future<void> _saveApplicationData() async {
-    if (!_validateAllFields()) return; // Ensure validation is passed
+    if (!_validateAllFields()) return;
 
     try {
-      // Await the API response
-      final response = await _logApplicationService.submitForm(
-        _adSourceController.text,
-        _companyController.text,
-        _appliedJobController.text,
-        _locationController.text,
-        _contactController.text,
-        _phoneController.text,
-        _emailController.text,
-        _dateController.text,
-        _referenceController.text,
-        _applystatusController.text,
-        _adlinkController.text,
-        _companysiteController.text,
-        _commentsController.text,
+      final newApplication = ApplicationData(
+        adSource: _adSourceController.text,
+        company: _companyController.text,
+        appliedJob: _appliedJobController.text,
+        location: _locationController.text,
+        contact: _contactController.text,
+        phone: _phoneController.text,
+        email: _emailController.text,
+        date: _dateController.text,
+        reference: _referenceController.text,
+        applyStatus: _applystatusController.text,
+        adLink: _adlinkController.text,
+        companySite: _companysiteController.text,
+        comments: _commentsController.text,
       );
+
+      final response =
+          await _logApplicationService.postApplication(newApplication);
 
       // Check response and show feedback
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -135,8 +138,14 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
             height: 20.0,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                        context, '/displayapplicationsScreen');
+                  },
+                  child: Text('Lista Sökta Tjänster')),
               CustomButton(text: 'Rensa fält', onPressed: _clearAllFields),
             ],
           ),

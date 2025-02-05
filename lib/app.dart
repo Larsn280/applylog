@@ -1,4 +1,5 @@
 import 'package:applylog/app_constants.dart';
+import 'package:applylog/display_applications_screen.dart';
 import 'package:applylog/log_application_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'ApplyLog',
       theme: AppConstants.themeData,
-      initialRoute: '/',
+      initialRoute: '/logapplicationScreen',
       routes: {
-        '/': (context) => const LogApplicationScreen(),
+        '/displayapplicationsScreen': (context) =>
+            const DisplayApplicationsScreen(),
+        '/logapplicationScreen': (context) => const LogApplicationScreen(),
       },
     );
   }
