@@ -1,6 +1,7 @@
 import 'package:applylog/models/application_data.dart';
 import 'package:applylog/services/application_service.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
+import 'package:applylog/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class DisplayApplicationsScreen extends StatefulWidget {
@@ -50,22 +51,24 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ElevatedButton(
+              CustomButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(
                       context, '/logapplicationScreen');
                 },
-                child: Text('Logga Tjänster'),
+                text: 'Logga Tjänster',
               ),
             ],
           ),
           const SizedBox(height: 12.0),
           Container(
             constraints: BoxConstraints(
-              maxHeight: 400, // Set your max height here
+              maxHeight: 400,
             ),
+            padding: EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
+              color: Colors.white,
+            ),
             child: FutureBuilder<List<ApplicationData>>(
               future: _allApplyLogEntrys,
               builder: (context, snapshot) {
@@ -79,30 +82,39 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                   List<ApplicationData> logs = snapshot.data!;
 
                   return ListView.builder(
-                    shrinkWrap:
-                        true, // Allow ListView to take only needed space
+                    shrinkWrap: true,
                     itemCount: logs.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black, width: 2.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              logs[index].appliedJob ?? 'No Job',
-                              style: TextStyle(fontSize: 15.0),
+                      return Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 16.0),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            Text(
-                              logs[index].timestamp ?? 'No Timestamp',
-                              style: TextStyle(fontSize: 13.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  logs[index].appliedJob ?? 'No Job',
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: Colors.white),
+                                ),
+                                Text(
+                                  logs[index].timestamp ?? 'No Timestamp',
+                                  style: TextStyle(
+                                      fontSize: 13.0, color: Colors.white),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                        ],
                       );
                     },
                   );

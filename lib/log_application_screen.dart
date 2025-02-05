@@ -140,12 +140,12 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
+              CustomButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(
                         context, '/displayapplicationsScreen');
                   },
-                  child: Text('Lista Sökta Tjänster')),
+                  text: 'Lista Sökta Tjänster'),
               CustomButton(text: 'Rensa fält', onPressed: _clearAllFields),
             ],
           ),
