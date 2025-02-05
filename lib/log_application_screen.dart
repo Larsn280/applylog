@@ -160,87 +160,113 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
             ),
             child: Column(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(8.0)),
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
-                        controller: _adSourceController,
-                        hintText: 'Var såg du annonsen?',
-                        validator: (value) {
-                          return _validateField('annonsen', value ?? '');
-                        },
-                        fieldKey: _adSourceKey,
-                        startValidation: _startValidation,
-                      ),
-                      CustomTextFormField(
-                        controller: _companyController,
-                        hintText: 'Företag',
-                        validator: (value) {
-                          return _validateField('företag', value ?? '');
-                        },
-                        fieldKey: _companyKey,
-                        startValidation: _startValidation,
-                      ),
-                      CustomTextFormField(
-                        controller: _appliedJobController,
-                        hintText: 'Sökt tjänst',
-                        validator: (value) {
-                          return _validateField('tjänst', value ?? '');
-                        },
-                        fieldKey: _appliedJobKey,
-                        startValidation: _startValidation,
-                      ),
-                      CustomTextFormField(
-                        controller: _locationController,
-                        hintText: 'Plats',
-                        validator: (value) {
-                          return _validateField('plats', value ?? '');
-                        },
-                        fieldKey: _locationKey,
-                        startValidation: _startValidation,
-                      ),
-                      CustomTextFormField(
-                        controller: _contactController,
-                        hintText: 'Kontaktperson (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _phoneController,
-                        hintText: 'Telefon (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _emailController,
-                        hintText: 'Email (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _dateController,
-                        hintText: 'Datum då du såg annonsen (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _referenceController,
-                        hintText: 'Referensnummer (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _applystatusController,
-                        hintText: 'Ansökningstatus (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _adlinkController,
-                        hintText: 'Länk till annonsen (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _companysiteController,
-                        hintText: 'Företagets webbsida (valfri)',
-                      ),
-                      CustomTextFormField(
-                        controller: _commentsController,
-                        hintText: 'Övriga kommentarer (valfri)',
-                      ),
-                    ],
-                  ),
+                CustomTextFormField(
+                  controller: _adSourceController,
+                  hintText: 'Var såg du annonsen?',
+                  validator: (value) {
+                    return _validateField('annonsen', value ?? '');
+                  },
+                  fieldKey: _adSourceKey,
+                  startValidation: _startValidation,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _companyController,
+                  hintText: 'Företag',
+                  validator: (value) {
+                    return _validateField('företag', value ?? '');
+                  },
+                  fieldKey: _companyKey,
+                  startValidation: _startValidation,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _appliedJobController,
+                  hintText: 'Sökt tjänst',
+                  validator: (value) {
+                    return _validateField('tjänst', value ?? '');
+                  },
+                  fieldKey: _appliedJobKey,
+                  startValidation: _startValidation,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _locationController,
+                  hintText: 'Plats',
+                  validator: (value) {
+                    return _validateField('plats', value ?? '');
+                  },
+                  fieldKey: _locationKey,
+                  startValidation: _startValidation,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _contactController,
+                  hintText: 'Kontaktperson (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _phoneController,
+                  hintText: 'Telefon (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _emailController,
+                  hintText: 'Email (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _dateController,
+                  hintText: 'Datum då du såg annonsen (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _referenceController,
+                  hintText: 'Referensnummer (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _applystatusController,
+                  hintText: 'Ansökningstatus (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _adlinkController,
+                  hintText: 'Länk till annonsen (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _companysiteController,
+                  hintText: 'Företagets webbsida (valfri)',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                CustomTextFormField(
+                  controller: _commentsController,
+                  hintText: 'Övriga kommentarer (valfri)',
                 ),
               ],
             ),

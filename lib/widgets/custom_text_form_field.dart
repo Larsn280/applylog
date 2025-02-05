@@ -25,7 +25,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: Colors.black),
+      decoration: BoxDecoration(
+          color: Colors.black, borderRadius: BorderRadius.circular(8.0)),
       child: TextFormField(
         key: widget.fieldKey,
         controller: widget.controller,
@@ -36,7 +37,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             fontSize: 13.0,
             color: Colors.white,
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
