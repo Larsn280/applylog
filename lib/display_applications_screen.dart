@@ -66,7 +66,6 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
             ),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
-            padding: EdgeInsets.all(10.0),
             child: FutureBuilder<List<ApplicationData>>(
               future: _allApplyLogEntrys,
               builder: (context, snapshot) {
@@ -85,12 +84,23 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                     itemCount: logs.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black, width: 2.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(logs[index].appliedJob ?? 'No Job'),
-                            Text(logs[index].timestamp ?? 'No Timestamp'),
+                            Text(
+                              logs[index].appliedJob ?? 'No Job',
+                              style: TextStyle(fontSize: 15.0),
+                            ),
+                            Text(
+                              logs[index].timestamp ?? 'No Timestamp',
+                              style: TextStyle(fontSize: 13.0),
+                            ),
                           ],
                         ),
                       );
