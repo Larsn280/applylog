@@ -34,7 +34,6 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
         throw Exception('Failed to load applications...');
       }
     } catch (e) {
-      print('Exception: $e');
       return [];
     }
   }
