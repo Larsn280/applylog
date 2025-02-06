@@ -6,7 +6,7 @@ import 'dart:convert';
 class ApplicationService {
   final String baseUrl = dotenv.env['DEVELOPMENT_ANDROID_EMULATOR_BASE_URL'] ??
       (throw Exception(
-          "DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env"));
+          'DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env. Please check your .env file.'));
 
   Future<List<ApplicationData>> fetchAllApplications() async {
     try {
@@ -20,19 +20,16 @@ class ApplicationService {
 
       if (response.statusCode == 200) {
         List<dynamic> responseList = jsonDecode(response.body);
-        List<ApplicationData> applications = responseList
-            .map((application) => ApplicationData.fromJson(application))
+        List<ApplicationData> applicationsData = responseList
+            .map((applicationData) => ApplicationData.fromJson(applicationData))
             .toList();
-        return applications;
+        return applicationsData;
       } else {
-        print('Failed to fetch logs: ${response.statusCode}');
-        print('Response: ${response.body}');
+        throw Exception(
+            'Error trying to fetch applicationsList: ${response.statusCode}');
       }
-
-      return [];
     } catch (e) {
-      print('Error fetching logs: $e');
-      throw Exception('Failed to fetch logs: $e');
+      throw Exception('Error trying to fetch applicationsList: $e');
     }
   }
 
@@ -51,14 +48,14 @@ class ApplicationService {
         return ApplicationData.fromJson(applicationData);
       } else {
         throw Exception(
-            'Failed to fetch applicationData: ${response.statusCode}');
+            'Error trying to fetch applicationData by ID: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to fetch applicationData: $e');
+      throw Exception('Error trying to fetch applicationData by ID: $e');
     }
   }
 
-  Future<http.Response> postApplication(ApplicationData data) async {
+  Future<http.Response> postApplication(ApplicationData applicationData) async {
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -67,19 +64,19 @@ class ApplicationService {
           'Accept': 'application/json',
         },
         body: json.encode({
-          'adSource': data.adSource,
-          'company': data.company,
-          'appliedJob': data.appliedJob,
-          'location': data.location,
-          'contact': data.contact,
-          'phone': data.phone,
-          'email': data.email,
-          'date': data.date,
-          'reference': data.reference,
-          'applyStatus': data.applyStatus,
-          'adLink': data.adLink,
-          'companySite': data.companySite,
-          'comments': data.comments,
+          'adSource': applicationData.adSource,
+          'company': applicationData.company,
+          'appliedJob': applicationData.appliedJob,
+          'location': applicationData.location,
+          'contact': applicationData.contact,
+          'phone': applicationData.phone,
+          'email': applicationData.email,
+          'date': applicationData.date,
+          'reference': applicationData.reference,
+          'applyStatus': applicationData.applyStatus,
+          'adLink': applicationData.adLink,
+          'companySite': applicationData.companySite,
+          'comments': applicationData.comments,
           'timestamp': DateTime.now().toIso8601String(),
         }),
       );
@@ -87,14 +84,12 @@ class ApplicationService {
       if (response.statusCode == 201) {
         print('Posted application successfully');
       } else {
-        print('Failed to post application: ${response.statusCode}');
-        print('Response: ${response.body}');
+        throw Exception('Error trying to post applicationData');
       }
 
       return response;
     } catch (e) {
-      print('Error posting application: $e');
-      throw Exception('Failed to post application: $e');
+      throw Exception('Error trying to post applicationData: $e');
     }
   }
 
@@ -111,10 +106,11 @@ class ApplicationService {
       if (response.statusCode == 204) {
         return true;
       } else {
-        throw Exception('Failed to delete application: ${response.statusCode}');
+        throw Exception(
+            'Error trying to delete application: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to delete application: $e');
+      throw Exception('Error trying to delete application: $e');
     }
   }
 }
