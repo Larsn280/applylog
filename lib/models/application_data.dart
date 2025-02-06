@@ -38,6 +38,7 @@ class ApplicationData {
 
   factory ApplicationData.fromJson(Map<String, dynamic> json) {
     return ApplicationData(
+      id: json['id'] ?? '',
       adSource: json['adSource'] ?? '',
       company: json['company'] ?? '',
       appliedJob: json['appliedJob'] ?? '',

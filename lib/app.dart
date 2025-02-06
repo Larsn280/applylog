@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'ApplyLog',
       theme: AppConstants.themeData,
-      initialRoute: '/logapplicationScreen',
+      initialRoute: '/displayapplicationsScreen',
       routes: {
         '/displayapplicationsScreen': (context) =>
             const DisplayApplicationsScreen(),

@@ -1,5 +1,6 @@
 import 'package:applylog/models/application_data.dart';
 import 'package:applylog/services/application_service.dart';
+import 'package:applylog/view_application_details_screen.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:applylog/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,21 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
     }
   }
 
+  void _navigateToDetailsScreen(BuildContext context, int applicationId) async {
+    final respose = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ViewApplicationDetailsScreen(
+                  applicationId: applicationId,
+                )));
+
+    if (respose == true) {
+      setState(() {
+        _allApplyLogEntrys = fetchAllLoggedEntrys();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomAppContainer(
@@ -73,11 +89,12 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
               future: _allApplyLogEntrys,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(color: Colors.black));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No applications found.'));
+                  return Center(child: Text('No data found.'));
                 } else {
                   List<ApplicationData> logs = snapshot.data!;
 
@@ -87,28 +104,34 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  logs[index].appliedJob ?? 'No Job',
-                                  style: TextStyle(
-                                      fontSize: 15.0, color: Colors.white),
-                                ),
-                                Text(
-                                  logs[index].timestamp ?? 'No Timestamp',
-                                  style: TextStyle(
-                                      fontSize: 13.0, color: Colors.white),
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              _navigateToDetailsScreen(
+                                  context, logs[index].id!);
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    logs[index].appliedJob ?? 'No Job',
+                                    style: TextStyle(
+                                        fontSize: 15.0, color: Colors.white),
+                                  ),
+                                  Text(
+                                    logs[index].timestamp ?? 'No Timestamp',
+                                    style: TextStyle(
+                                        fontSize: 13.0, color: Colors.white),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(

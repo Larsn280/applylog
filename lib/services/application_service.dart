@@ -33,6 +33,28 @@ class ApplicationService {
     }
   }
 
+  Future<ApplicationData> fetchLoggedApplicationById(int applicationId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$emulatorUrl/$applicationId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        dynamic applicationData = jsonDecode(response.body);
+        return ApplicationData.fromJson(applicationData);
+      } else {
+        throw Exception(
+            'Failed to fetch applicationData: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch applicationData: $e');
+    }
+  }
+
   Future<http.Response> postApplication(ApplicationData data) async {
     try {
       final response = await http.post(
@@ -70,6 +92,26 @@ class ApplicationService {
     } catch (e) {
       print('Error posting application: $e');
       throw Exception('Failed to post application: $e');
+    }
+  }
+
+  Future<bool> removeApplication(int applicationId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$emulatorUrl/$applicationId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 204) {
+        return true;
+      } else {
+        throw Exception('Failed to delete application: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete application: $e');
     }
   }
 }
