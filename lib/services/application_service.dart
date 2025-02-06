@@ -1,15 +1,17 @@
 import 'package:applylog/models/application_data.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApplicationService {
-  // final browserUrl = 'http://localhost:5110/api/ApplyLogEntry';
-  final emulatorUrl = 'http://10.0.2.2:5110/api/ApplyLogEntry';
+  final String baseUrl = dotenv.env['DEVELOPMENT_ANDROID_EMULATOR_BASE_URL'] ??
+      (throw Exception(
+          "DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env"));
 
-  Future<List<ApplicationData>> fetchAllLoggedApplications() async {
+  Future<List<ApplicationData>> fetchAllApplications() async {
     try {
       final response = await http.get(
-        Uri.parse(emulatorUrl),
+        Uri.parse(baseUrl),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -18,9 +20,10 @@ class ApplicationService {
 
       if (response.statusCode == 200) {
         List<dynamic> responseList = jsonDecode(response.body);
-        List<ApplicationData> logs =
-            responseList.map((log) => ApplicationData.fromJson(log)).toList();
-        return logs;
+        List<ApplicationData> applications = responseList
+            .map((application) => ApplicationData.fromJson(application))
+            .toList();
+        return applications;
       } else {
         print('Failed to fetch logs: ${response.statusCode}');
         print('Response: ${response.body}');
@@ -33,10 +36,10 @@ class ApplicationService {
     }
   }
 
-  Future<ApplicationData> fetchLoggedApplicationById(int applicationId) async {
+  Future<ApplicationData> fetchApplicationById(int applicationId) async {
     try {
       final response = await http.get(
-        Uri.parse('$emulatorUrl/$applicationId'),
+        Uri.parse('$baseUrl/$applicationId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -58,7 +61,7 @@ class ApplicationService {
   Future<http.Response> postApplication(ApplicationData data) async {
     try {
       final response = await http.post(
-        Uri.parse(emulatorUrl),
+        Uri.parse(baseUrl),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -98,7 +101,7 @@ class ApplicationService {
   Future<bool> removeApplication(int applicationId) async {
     try {
       final response = await http.delete(
-        Uri.parse('$emulatorUrl/$applicationId'),
+        Uri.parse('$baseUrl/$applicationId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

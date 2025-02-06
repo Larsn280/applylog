@@ -26,8 +26,7 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
 
   Future<List<ApplicationData>> fetchAllLoggedEntrys() async {
     try {
-      final response =
-          await _logApplicationService.fetchAllLoggedApplications();
+      final response = await _logApplicationService.fetchAllApplications();
 
       if (response.isNotEmpty) {
         return response;

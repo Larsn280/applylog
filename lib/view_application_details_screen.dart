@@ -27,8 +27,8 @@ class _ViewApplicationDetailsScreenState
 
   Future<ApplicationData> _fetchApplicationData() async {
     try {
-      final response = await applicationService
-          .fetchLoggedApplicationById(widget.applicationId);
+      final response =
+          await applicationService.fetchApplicationById(widget.applicationId);
       return response;
     } catch (e) {
       throw Exception('Failed to fetch applicationData: $e');
