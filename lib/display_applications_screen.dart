@@ -14,19 +14,19 @@ class DisplayApplicationsScreen extends StatefulWidget {
 }
 
 class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
-  late ApplicationService _logApplicationService;
-  late Future<List<ApplicationData>> _allApplyLogEntrys;
+  late ApplicationService _applicationService;
+  late Future<List<ApplicationData>> _allApplications;
 
   @override
   void initState() {
     super.initState();
-    _logApplicationService = ApplicationService();
-    _allApplyLogEntrys = fetchAllLoggedEntrys();
+    _applicationService = ApplicationService();
+    _allApplications = fetchAllApplications();
   }
 
-  Future<List<ApplicationData>> fetchAllLoggedEntrys() async {
+  Future<List<ApplicationData>> fetchAllApplications() async {
     try {
-      final response = await _logApplicationService.fetchAllApplications();
+      final response = await _applicationService.fetchAllApplications();
 
       if (response.isNotEmpty) {
         return response;
@@ -49,7 +49,7 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
 
     if (respose == true) {
       setState(() {
-        _allApplyLogEntrys = fetchAllLoggedEntrys();
+        _allApplications = fetchAllApplications();
       });
     }
   }
@@ -85,7 +85,7 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
               color: Colors.white,
             ),
             child: FutureBuilder<List<ApplicationData>>(
-              future: _allApplyLogEntrys,
+              future: _allApplications,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(

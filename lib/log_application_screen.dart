@@ -32,12 +32,12 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
   final TextEditingController _adlinkController = TextEditingController();
   final TextEditingController _companysiteController = TextEditingController();
   final TextEditingController _commentsController = TextEditingController();
-  late ApplicationService _logApplicationService;
+  late ApplicationService _applicationService;
 
   @override
   void initState() {
     super.initState();
-    _logApplicationService = ApplicationService();
+    _applicationService = ApplicationService();
   }
 
   String? _validateField(String fieldName, String value) {
@@ -110,7 +110,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
       );
 
       final response =
-          await _logApplicationService.postApplication(newApplication);
+          await _applicationService.postApplication(newApplication);
 
       // Check response and show feedback
       if (response.statusCode == 200 || response.statusCode == 201) {
