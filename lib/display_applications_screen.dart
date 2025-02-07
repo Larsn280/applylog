@@ -47,6 +47,8 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                 )));
 
     if (respose == true) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Ansökan ändrades")));
       setState(() {
         _allApplications = fetchAllApplications();
       });

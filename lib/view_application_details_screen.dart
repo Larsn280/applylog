@@ -1,3 +1,4 @@
+import 'package:applylog/edit_application_screen.dart';
 import 'package:applylog/models/application_data.dart';
 import 'package:applylog/services/application_service.dart';
 import 'package:applylog/widgets/custom_app_container.dart';
@@ -15,20 +16,20 @@ class ViewApplicationDetailsScreen extends StatefulWidget {
 
 class _ViewApplicationDetailsScreenState
     extends State<ViewApplicationDetailsScreen> {
-  late ApplicationService applicationService;
-  late Future<ApplicationData> applicationData;
+  late ApplicationService _applicationService;
+  late Future<ApplicationData> _applicationData;
 
   @override
   void initState() {
-    applicationService = ApplicationService();
-    applicationData = _fetchApplicationData();
     super.initState();
+    _applicationService = ApplicationService();
+    _applicationData = _fetchApplicationData();
   }
 
   Future<ApplicationData> _fetchApplicationData() async {
     try {
       final response =
-          await applicationService.fetchApplicationById(widget.applicationId);
+          await _applicationService.fetchApplicationById(widget.applicationId);
       return response;
     } catch (e) {
       throw Exception('Failed to fetch applicationData: $e');
@@ -63,15 +64,29 @@ class _ViewApplicationDetailsScreenState
       },
     );
 
-    // If the user confirmed the deletion, proceed with the remove operation
     if (confirmDelete == true) {
-      bool success = await applicationService.removeApplication(applicationId);
+      bool success = await _applicationService.removeApplication(applicationId);
       if (success) {
         Navigator.of(context).pop(true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Misslyckade med att ta bort ansökningen')));
       }
+    }
+  }
+
+  void _navigateToEditScreen(BuildContext context, int applicationId) async {
+    final respose = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditApplicationScreen(
+                  applicationId: applicationId,
+                )));
+
+    if (respose == true) {
+      setState(() {
+        _applicationData = _fetchApplicationData();
+      });
     }
   }
 
@@ -90,7 +105,7 @@ class _ViewApplicationDetailsScreenState
             decoration: BoxDecoration(color: Colors.white),
             padding: EdgeInsets.all(20.0),
             child: FutureBuilder<ApplicationData>(
-              future: applicationData,
+              future: _applicationData,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -107,19 +122,21 @@ class _ViewApplicationDetailsScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.transparent,
-                                ),
-                                onPressed: () {},
-                              ),
                               Text(
                                 '${application.appliedJob}',
                                 style: TextStyle(fontSize: 20.0),
                               ),
+                              const Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    _navigateToEditScreen(
+                                        context, application.id!);
+                                  },
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.green,
+                                  )),
                               IconButton(
                                   icon: Icon(
                                     Icons.delete,
@@ -127,7 +144,7 @@ class _ViewApplicationDetailsScreenState
                                   ),
                                   onPressed: () {
                                     _removeApplication(application.id!);
-                                  })
+                                  }),
                             ],
                           ),
                           Align(

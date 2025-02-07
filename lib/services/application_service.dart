@@ -55,6 +55,45 @@ class ApplicationService {
     }
   }
 
+  Future<http.Response> updateApplication(
+      ApplicationData applicationData) async {
+    try {
+      final response = await http.put(
+        Uri.parse(baseUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          'id': applicationData.id,
+          'adSource': applicationData.adSource,
+          'company': applicationData.company,
+          'appliedJob': applicationData.appliedJob,
+          'location': applicationData.location,
+          'contact': applicationData.contact,
+          'phone': applicationData.phone,
+          'email': applicationData.email,
+          'date': applicationData.date,
+          'reference': applicationData.reference,
+          'applyStatus': applicationData.applyStatus,
+          'adLink': applicationData.adLink,
+          'companySite': applicationData.companySite,
+          'comments': applicationData.comments,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Edited application successfully');
+      } else {
+        throw Exception('Error trying to edit applicationData');
+      }
+
+      return response;
+    } catch (e) {
+      throw Exception('Error trying to edit applicationData: $e');
+    }
+  }
+
   Future<http.Response> postApplication(ApplicationData applicationData) async {
     try {
       final response = await http.post(

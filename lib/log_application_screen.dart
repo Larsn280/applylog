@@ -40,6 +40,24 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
     _applicationService = ApplicationService();
   }
 
+  @override
+  void dispose() {
+    _adSourceController.dispose();
+    _companyController.dispose();
+    _appliedJobController.dispose();
+    _locationController.dispose();
+    _contactController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _dateController.dispose();
+    _referenceController.dispose();
+    _applystatusController.dispose();
+    _adlinkController.dispose();
+    _companysiteController.dispose();
+    _commentsController.dispose();
+    super.dispose();
+  }
+
   String? _validateField(String fieldName, String value) {
     if (value.isEmpty) {
       return 'Vänligen ange $fieldName.';
@@ -55,7 +73,7 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _adSourceController.clear();
-        _companysiteController.clear();
+        _companyController.clear();
         _appliedJobController.clear();
         _locationController.clear();
         _contactController.clear();
