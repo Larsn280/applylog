@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApplicationService {
-  final String baseUrl = dotenv.env['DEVELOPMENT_ANDROID_EMULATOR_BASE_URL'] ??
-      (throw Exception(
-          'DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env. Please check your .env file.'));
+  final String baseUrl =
+      "https://h37wq048hl.execute-api.eu-north-1.amazonaws.com/prod/Applications";
+  // final String baseUrl = dotenv.env['DEVELOPMENT_ANDROID_EMULATOR_BASE_URL'] ??
+  //     (throw Exception(
+  //         'DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env. Please check your .env file.'));
 
   Future<List<ApplicationData>> fetchAllApplications() async {
     try {
@@ -33,10 +35,16 @@ class ApplicationService {
     }
   }
 
-  Future<ApplicationData> fetchApplicationById(int applicationId) async {
+  Future<ApplicationData> fetchApplicationById(String applicationId) async {
+    // Print the applicationId to debug
+
     try {
+      // Encode the applicationId to handle special characters like #
+      final encodedApplicationId = Uri.encodeComponent(applicationId);
+
+      // Send the GET request with the encoded applicationId
       final response = await http.get(
-        Uri.parse('$baseUrl/$applicationId'),
+        Uri.parse('$baseUrl/$encodedApplicationId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -44,13 +52,16 @@ class ApplicationService {
       );
 
       if (response.statusCode == 200) {
+        // If successful, decode the response body and return the application data
         dynamic applicationData = jsonDecode(response.body);
         return ApplicationData.fromJson(applicationData);
       } else {
+        // Throw an error if the request is unsuccessful
         throw Exception(
             'Error trying to fetch applicationData by ID: ${response.statusCode}');
       }
     } catch (e) {
+      // Handle any errors that occur during the fetch operation
       throw Exception('Error trying to fetch applicationData by ID: $e');
     }
   }
@@ -65,7 +76,7 @@ class ApplicationService {
           'Accept': 'application/json',
         },
         body: json.encode({
-          'id': applicationData.id,
+          'id': applicationData.sk,
           'adSource': applicationData.adSource,
           'company': applicationData.company,
           'appliedJob': applicationData.appliedJob,
@@ -132,7 +143,7 @@ class ApplicationService {
     }
   }
 
-  Future<bool> removeApplication(int applicationId) async {
+  Future<bool> removeApplication(String applicationId) async {
     try {
       final response = await http.delete(
         Uri.parse('$baseUrl/$applicationId'),

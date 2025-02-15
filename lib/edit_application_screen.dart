@@ -6,7 +6,7 @@ import 'package:applylog/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class EditApplicationScreen extends StatefulWidget {
-  final int applicationId;
+  final String applicationId;
   const EditApplicationScreen({super.key, required this.applicationId});
 
   @override
@@ -20,7 +20,7 @@ class _EditApplicationScreenState extends State<EditApplicationScreen> {
   final GlobalKey<FormFieldState> _appliedJobKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _locationKey = GlobalKey<FormFieldState>();
 
-  int applicationId = 0;
+  String applicationId = '';
   final TextEditingController _adSourceController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
   final TextEditingController _appliedJobController = TextEditingController();
@@ -64,7 +64,7 @@ class _EditApplicationScreenState extends State<EditApplicationScreen> {
   }
 
   void _setControllerTexts(ApplicationData applicationData) {
-    applicationId = applicationData.id!;
+    applicationId = applicationData.sk!;
     _adSourceController.text = applicationData.adSource!;
     _companyController.text = applicationData.company!;
     _appliedJobController.text = applicationData.appliedJob!;
@@ -115,7 +115,8 @@ class _EditApplicationScreenState extends State<EditApplicationScreen> {
 
     try {
       final updatedApplication = ApplicationData(
-        id: applicationId,
+        pk: "",
+        sk: applicationId,
         adSource: _adSourceController.text,
         company: _companyController.text,
         appliedJob: _appliedJobController.text,

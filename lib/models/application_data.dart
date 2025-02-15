@@ -1,25 +1,26 @@
 import 'package:intl/intl.dart';
 
 class ApplicationData {
-  int? id;
-  String? adSource;
-  String? company;
-  String? appliedJob;
-  String? location;
-  String? contact;
-  String? phone;
-  String? email;
-  String? date;
-  String? reference;
-  String? applyStatus;
-  String? adLink;
-  String? companySite;
-  String? comments;
-
-  String? timestamp;
+  String pk; // Primary Key
+  String sk; // Sort Key
+  String adSource;
+  String company;
+  String appliedJob;
+  String location;
+  String contact;
+  String phone;
+  String email;
+  String date;
+  String reference;
+  String applyStatus;
+  String adLink;
+  String companySite;
+  String comments;
+  DateTime? timestamp;
 
   ApplicationData({
-    this.id,
+    required this.pk,
+    required this.sk,
     required this.adSource,
     required this.company,
     required this.appliedJob,
@@ -38,7 +39,8 @@ class ApplicationData {
 
   factory ApplicationData.fromJson(Map<String, dynamic> json) {
     return ApplicationData(
-      id: json['id'] ?? '',
+      pk: json['pk'] ?? '',
+      sk: json['sk'] ?? '',
       adSource: json['adSource'] ?? '',
       company: json['company'] ?? '',
       appliedJob: json['appliedJob'] ?? '',
@@ -52,9 +54,15 @@ class ApplicationData {
       adLink: json['adLink'] ?? '',
       companySite: json['companySite'] ?? '',
       comments: json['comments'] ?? '',
-      timestamp: json['timestamp'] != null
-          ? DateFormat('yyyy-MM-dd').format(DateTime.parse(json['timestamp']))
-          : null,
+      timestamp:
+          json['timestamp'] != null ? DateTime.parse(json['timestamp']) : null,
     );
+  }
+
+  // Optional: Method to format timestamp as a readable date string
+  String get formattedTimestamp {
+    return timestamp != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(timestamp!)
+        : 'N/A';
   }
 }

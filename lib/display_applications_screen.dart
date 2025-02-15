@@ -38,7 +38,8 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
     }
   }
 
-  void _navigateToDetailsScreen(BuildContext context, int applicationId) async {
+  void _navigateToDetailsScreen(
+      BuildContext context, String applicationId) async {
     final respose = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -106,8 +107,7 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _navigateToDetailsScreen(
-                                  context, logs[index].id!);
+                              _navigateToDetailsScreen(context, logs[index].sk);
                             },
                             child: Container(
                               width: double.infinity,
@@ -126,7 +126,8 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                                         fontSize: 15.0, color: Colors.white),
                                   ),
                                   Text(
-                                    logs[index].timestamp ?? 'No Timestamp',
+                                    logs[index].timestamp.toString() ??
+                                        'No Timestamp',
                                     style: TextStyle(
                                         fontSize: 13.0, color: Colors.white),
                                   ),

@@ -5,7 +5,7 @@ import 'package:applylog/widgets/custom_app_container.dart';
 import 'package:flutter/material.dart';
 
 class ViewApplicationDetailsScreen extends StatefulWidget {
-  final int applicationId;
+  final String applicationId;
 
   const ViewApplicationDetailsScreen({super.key, required this.applicationId});
 
@@ -36,7 +36,7 @@ class _ViewApplicationDetailsScreenState
     }
   }
 
-  Future<void> _removeApplication(int applicationId) async {
+  Future<void> _removeApplication(String applicationId) async {
     // Show the confirmation dialog
     bool? confirmDelete = await showDialog<bool>(
       context: context,
@@ -75,7 +75,7 @@ class _ViewApplicationDetailsScreenState
     }
   }
 
-  void _navigateToEditScreen(BuildContext context, int applicationId) async {
+  void _navigateToEditScreen(BuildContext context, String applicationId) async {
     final respose = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -131,7 +131,7 @@ class _ViewApplicationDetailsScreenState
                               IconButton(
                                   onPressed: () {
                                     _navigateToEditScreen(
-                                        context, application.id!);
+                                        context, application.sk!);
                                   },
                                   icon: Icon(
                                     Icons.edit,
@@ -143,7 +143,7 @@ class _ViewApplicationDetailsScreenState
                                     color: Colors.red,
                                   ),
                                   onPressed: () {
-                                    _removeApplication(application.id!);
+                                    _removeApplication(application.sk!);
                                   }),
                             ],
                           ),

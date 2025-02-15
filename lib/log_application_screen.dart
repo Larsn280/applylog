@@ -112,6 +112,8 @@ class _LogApplicationScreen extends State<LogApplicationScreen> {
 
     try {
       final newApplication = ApplicationData(
+        pk: "",
+        sk: "",
         adSource: _adSourceController.text,
         company: _companyController.text,
         appliedJob: _appliedJobController.text,
