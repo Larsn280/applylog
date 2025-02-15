@@ -4,11 +4,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApplicationService {
-  final String baseUrl =
-      "https://h37wq048hl.execute-api.eu-north-1.amazonaws.com/prod/Applications";
-  // final String baseUrl = dotenv.env['DEVELOPMENT_ANDROID_EMULATOR_BASE_URL'] ??
-  //     (throw Exception(
-  //         'DEVELOPMENT_ANDROID_EMULATOR_BASE_URL is missing in .env. Please check your .env file.'));
+  final String apigatewayKey = dotenv.env['API_GATEWAY_KEY'] ??
+      (throw Exception(
+          'API_GATEWAY_KEY is missing in .env. Please check your .env file.'));
+
+  final String baseUrl = dotenv.env['API_GATEWAY_URL'] ??
+      (throw Exception(
+          'API_GATEWAY_URL is missing in .env. Please check your .env file.'));
 
   Future<List<ApplicationData>> fetchAllApplications() async {
     try {
@@ -17,6 +19,7 @@ class ApplicationService {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'x-api-key': apigatewayKey,
         },
       );
 
@@ -48,6 +51,7 @@ class ApplicationService {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'x-api-key': apigatewayKey,
         },
       );
 
@@ -69,14 +73,18 @@ class ApplicationService {
   Future<http.Response> updateApplication(
       ApplicationData applicationData) async {
     try {
+      final encodedApplicationId = Uri.encodeComponent(applicationData.sk);
+
       final response = await http.put(
-        Uri.parse(baseUrl),
+        Uri.parse('$baseUrl/$encodedApplicationId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'x-api-key': apigatewayKey,
         },
         body: json.encode({
-          'id': applicationData.sk,
+          'pk': applicationData.pk,
+          'sk': applicationData.sk,
           'adSource': applicationData.adSource,
           'company': applicationData.company,
           'appliedJob': applicationData.appliedJob,
@@ -112,8 +120,11 @@ class ApplicationService {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'x-api-key': apigatewayKey,
         },
         body: json.encode({
+          'pk': applicationData.pk,
+          'sk': applicationData.sk,
           'adSource': applicationData.adSource,
           'company': applicationData.company,
           'appliedJob': applicationData.appliedJob,
@@ -145,11 +156,14 @@ class ApplicationService {
 
   Future<bool> removeApplication(String applicationId) async {
     try {
+      final encodedApplicationId = Uri.encodeComponent(applicationId);
+
       final response = await http.delete(
-        Uri.parse('$baseUrl/$applicationId'),
+        Uri.parse('$baseUrl/$encodedApplicationId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'x-api-key': apigatewayKey,
         },
       );
 
