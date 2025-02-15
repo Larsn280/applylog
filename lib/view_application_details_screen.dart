@@ -131,7 +131,7 @@ class _ViewApplicationDetailsScreenState
                               IconButton(
                                   onPressed: () {
                                     _navigateToEditScreen(
-                                        context, application.sk!);
+                                        context, application.sk);
                                   },
                                   icon: Icon(
                                     Icons.edit,
@@ -143,7 +143,7 @@ class _ViewApplicationDetailsScreenState
                                     color: Colors.red,
                                   ),
                                   onPressed: () {
-                                    _removeApplication(application.sk!);
+                                    _removeApplication(application.sk);
                                   }),
                             ],
                           ),

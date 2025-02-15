@@ -64,20 +64,20 @@ class _EditApplicationScreenState extends State<EditApplicationScreen> {
   }
 
   void _setControllerTexts(ApplicationData applicationData) {
-    applicationId = applicationData.sk!;
-    _adSourceController.text = applicationData.adSource!;
-    _companyController.text = applicationData.company!;
-    _appliedJobController.text = applicationData.appliedJob!;
-    _locationController.text = applicationData.location!;
-    _contactController.text = applicationData.contact!;
-    _phoneController.text = applicationData.phone!;
-    _emailController.text = applicationData.email!;
-    _dateController.text = applicationData.date!;
-    _referenceController.text = applicationData.reference!;
-    _applystatusController.text = applicationData.applyStatus!;
-    _adlinkController.text = applicationData.adLink!;
-    _companysiteController.text = applicationData.companySite!;
-    _commentsController.text = applicationData.comments!;
+    applicationId = applicationData.sk;
+    _adSourceController.text = applicationData.adSource;
+    _companyController.text = applicationData.company;
+    _appliedJobController.text = applicationData.appliedJob;
+    _locationController.text = applicationData.location;
+    _contactController.text = applicationData.contact;
+    _phoneController.text = applicationData.phone;
+    _emailController.text = applicationData.email;
+    _dateController.text = applicationData.date;
+    _referenceController.text = applicationData.reference;
+    _applystatusController.text = applicationData.applyStatus;
+    _adlinkController.text = applicationData.adLink;
+    _companysiteController.text = applicationData.companySite;
+    _commentsController.text = applicationData.comments;
   }
 
   String? _validateField(String fieldName, String value) {

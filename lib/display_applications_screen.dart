@@ -121,13 +121,12 @@ class _DisplayApplicationScreenState extends State<DisplayApplicationsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    logs[index].appliedJob ?? 'No Job',
+                                    logs[index].appliedJob,
                                     style: TextStyle(
                                         fontSize: 15.0, color: Colors.white),
                                   ),
                                   Text(
-                                    logs[index].timestamp.toString() ??
-                                        'No Timestamp',
+                                    logs[index].timestamp.toString(),
                                     style: TextStyle(
                                         fontSize: 13.0, color: Colors.white),
                                   ),
